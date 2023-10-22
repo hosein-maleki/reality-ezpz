@@ -53,14 +53,14 @@ bash <(curl -sL https://raw.githubusercontent.com/hosein-maleki/reality-ezpz/mas
 ```
 or (if the above command dosen't work):
 ```
-bash <(curl -sL https://raw.githubusercontent.com/aleskxyz/reality-ezpz/master/reality-ezpz.sh)
+bash <(curl -sL https://raw.githubusercontent.com/hosein-maleki/reality-ezpz/master/reality-ezpz.sh)
 ```
 After a while you will get configuration string and QR code:
 ![image](https://user-images.githubusercontent.com/39186039/232563871-0140e10a-22b4-4653-9bc9-cdba519a8b41.png)
 
 You can run TUI with `-m` or `--menu` option:
 ```
-bash <(curl -sL https://bit.ly/realityez) -m
+bash <(curl -sL https://raw.githubusercontent.com/hosein-maleki/reality-ezpz/master/reality-ezpz.sh) -m
 ```
 And then you will see management menu in your terminal:
 ![image](https://github.com/aleskxyz/reality-ezpz/assets/39186039/a727148c-1a11-4702-80f3-ab8b46d916af)
