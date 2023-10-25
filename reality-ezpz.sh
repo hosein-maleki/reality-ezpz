@@ -48,7 +48,7 @@ image[wgcf]="virb3/wgcf:2.2.18"
 
 defaults[transport]=tcp
 defaults[domain]=www.google.com
-defaults[port]=2053
+defaults[port]=7900
 defaults[safenet]=OFF
 defaults[warp]=OFF
 defaults[warp_license]=""
@@ -481,7 +481,7 @@ function build_config {
     echo 'You cannot use "hysteria2" transport with "xray" core. Use other transports or change core to sing-box'
     exit 1
   fi
-  if [[ ${config[security]} == 'letsencrypt' && ${config[port]} -ne 2053 ]]; then
+  if [[ ${config[security]} == 'letsencrypt' && ${config[port]} -ne 7900 ]]; then
     if lsof -i :80 >/dev/null 2>&1; then
       free_80=false
       for container in $(${docker_cmd} -p ${compose_project} ps -q); do
@@ -630,7 +630,7 @@ services:
   engine:
     image: ${image[${config[core]}]}
     $([[ ${config[security]} == 'reality' ]] && echo "ports:" || true)
-    $([[ ${config[security]} == 'reality' && ${config[port]} -eq 2053 ]] && echo '- 80:8080' || true)
+    $([[ ${config[security]} == 'reality' && ${config[port]} -eq 7900 ]] && echo '- 80:8080' || true)
     $([[ ${config[security]} == 'reality' ]] && echo "- ${config[port]}:8443" || true)
     $([[ ${config[transport]} == 'tuic' || ${config[transport]} == 'hysteria2' ]] && echo "ports:" || true)
     $([[ ${config[transport]} == 'tuic' || ${config[transport]} == 'hysteria2' ]] && echo "- ${config[port]}:8443/udp" || true)
@@ -657,7 +657,7 @@ echo "
   haproxy:
     image: ${image[haproxy]}
     ports:
-    $([[ ${config[security]} == 'letsencrypt' || ${config[port]} -eq 2053 ]] && echo '- 80:8080' || true)
+    $([[ ${config[security]} == 'letsencrypt' || ${config[port]} -eq 7900 ]] && echo '- 80:8080' || true)
     - ${config[port]}:8443
     restart: always
     volumes:
@@ -868,7 +868,7 @@ function generate_engine_config {
   local reality_object=""
   local tls_object=""
   local warp_object=""
-  local reality_port=2053
+  local reality_port=7900
   if [[ ${config[transport]} == 'tuic' ]]; then
     type='tuic'
   elif [[ ${config[transport]} == 'hysteria2' ]]; then
@@ -1799,7 +1799,7 @@ function config_security_menu {
       message_box 'Invalid Configuration' 'You cannot use "reality" TLS certificate with "hysteria2" transport. Change TLS certifcate to "letsencrypt" or "selfsigned" or use other transports'
       continue
     fi
-    if [[ ${security} == 'letsencrypt' && ${config[port]} -ne 2053 ]]; then
+    if [[ ${security} == 'letsencrypt' && ${config[port]} -ne 7900 ]]; then
       if lsof -i :80 >/dev/null 2>&1; then
         free_80=false
         for container in $(${docker_cmd} -p ${compose_project} ps -q); do
